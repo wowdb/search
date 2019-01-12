@@ -1,0 +1,41 @@
+{
+  "name": "wowdb-search",
+  "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "Ali Zahid",
+    "email": "ali.zahid@live.com",
+    "url": "https://designplox.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wowdb/miner.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "dev": "node -r dotenv/config index.js",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "fz-search": "https://github.com/wowdb/FuzzySearch#v1.1",
+    "lodash.get": "^4.4.2",
+    "mongodb": "^3.1.10"
+  },
+  "devDependencies": {
+    "dotenv": "^6.2.0",
+    "husky": "^1.3.1",
+    "prettier": "^1.15.3",
+    "pretty-quick": "^1.8.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "prettier": {
+    "bracketSpacing": true,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "none"
+  }
+}
