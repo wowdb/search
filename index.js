@@ -156,11 +156,9 @@ class Search {
       const query = get(parsed, 'query.query')
 
       if (query) {
-        const results = fuzzy.search(query)
+        const data = fuzzy.search(query)
 
-        this.reply(reply, 200, {
-          results
-        })
+        this.reply(reply, 200, data)
       } else {
         this.reply(reply, 400, {
           error: 'Missing query'
