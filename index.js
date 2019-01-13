@@ -81,7 +81,7 @@ class Search {
         name: 1,
         qualityId: 1
       },
-      ({ icon, name, quality, spellId: id }) => ({
+      ({ icon, name, qualityId: quality, spellId: id }) => ({
         icon,
         id,
         name,
@@ -98,7 +98,7 @@ class Search {
         name: 1,
         qualityId: 1
       },
-      ({ icon, name, quality, creatureId: id }) => ({
+      ({ icon, name, creatureId: id, qualityId: quality }) => ({
         icon,
         id,
         name,
@@ -139,15 +139,15 @@ class Search {
 
     const fuzzy = new FuzzySearch({
       keys: ['name', 'description'],
-      source: [
-        ...achievements,
-        ...bosses,
-        ...items,
-        ...mounts,
-        ...pets,
-        ...quests,
-        ...zones
-      ]
+      source: [].concat(
+        achievements,
+        bosses,
+        items,
+        mounts,
+        pets,
+        quests,
+        zones
+      )
     })
 
     const server = http.createServer(async (request, reply) => {
