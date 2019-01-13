@@ -169,6 +169,8 @@ class Search {
     })
 
     server.listen(PORT, () => {
+      console.log(`listening on ${PORT}`)
+
       client.close()
     })
   }
