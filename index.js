@@ -122,6 +122,23 @@ class Search {
       })
     )
 
+    const spells = await this.fetch(
+      'spells',
+      {
+        description: 1,
+        icon: 1,
+        id: 1,
+        name: 1
+      },
+      ({ description, icon, id, name }) => ({
+        description,
+        icon,
+        id,
+        name,
+        type: 'spell'
+      })
+    )
+
     const zones = await this.fetch(
       'zones',
       {
@@ -146,6 +163,7 @@ class Search {
         mounts,
         pets,
         quests,
+        spells,
         zones
       )
     })
