@@ -9,6 +9,36 @@ const get = require('lodash.get')
 
 class Search {
   static async init() {
+    await this.fetchData()
+
+    const server = http.createServer(async (request, reply) => {
+      const parsed = url.parse(request.url, true)
+
+      const { action, query } = get(parsed, 'query', {})
+
+      if (action === 'reload') {
+        await this.fetchData()
+
+        this.reply(reply, 200, {
+          status: 'done'
+        })
+      } else if (query) {
+        const data = this.fuzzy.search(query)
+
+        this.reply(reply, 200, data)
+      } else {
+        this.reply(reply, 400, {
+          error: 'Missing query'
+        })
+      }
+    })
+
+    server.listen(PORT, () => {
+      console.log(`listening on ${PORT}`)
+    })
+  }
+
+  static async fetchData() {
     const client = await MongoClient.connect(
       MONGO_URI,
       {
@@ -154,7 +184,9 @@ class Search {
       })
     )
 
-    const fuzzy = new FuzzySearch({
+    client.close()
+
+    this.fuzzy = new FuzzySearch({
       keys: ['name', 'description'],
       source: [].concat(
         achievements,
@@ -168,27 +200,7 @@ class Search {
       )
     })
 
-    const server = http.createServer(async (request, reply) => {
-      const parsed = url.parse(request.url, true)
-
-      const query = get(parsed, 'query.query')
-
-      if (query) {
-        const data = fuzzy.search(query)
-
-        this.reply(reply, 200, data)
-      } else {
-        this.reply(reply, 400, {
-          error: 'Missing query'
-        })
-      }
-    })
-
-    server.listen(PORT, () => {
-      console.log(`listening on ${PORT}`)
-
-      client.close()
-    })
+    console.log('data reloaded')
   }
 
   static async fetch(collection, projection, mapper) {
