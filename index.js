@@ -39,12 +39,9 @@ class Search {
   }
 
   static async fetchData() {
-    const client = await MongoClient.connect(
-      MONGO_URI,
-      {
-        useNewUrlParser: true
-      }
-    )
+    const client = await MongoClient.connect(MONGO_URI, {
+      useNewUrlParser: true
+    })
 
     this.db = client.db(MONGO_DB)
 
