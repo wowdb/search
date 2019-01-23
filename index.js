@@ -7,7 +7,7 @@ const Search = require('./lib/search')
 const server = fastify()
 
 server.get('/reload', async () => {
-  await Search.fetch()
+  Search.fetch()
 
   return {
     status: 'done'
