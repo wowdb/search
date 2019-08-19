@@ -44,4 +44,6 @@ server.listen(PORT, err => {
   if (err) {
     throw err
   }
+
+  Search.fetch()
 })
