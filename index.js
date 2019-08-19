@@ -40,7 +40,7 @@ server.get('/search', async request => {
   return data
 })
 
-server.listen(PORT, '0.0.0.0', err => {
+server.listen(PORT, err => {
   if (err) {
     throw err
   }
